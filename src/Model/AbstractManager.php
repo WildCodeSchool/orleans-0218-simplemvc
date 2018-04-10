@@ -51,7 +51,7 @@ abstract class AbstractManager
      *
      * @return array
      */
-    public function selectOneById(int $id):string
+    public function selectOneById(int $id)
     {
         // prepared request
         $statement = $this->pdoConnection->prepare("SELECT * FROM $this->table WHERE id=:id");
@@ -80,16 +80,28 @@ abstract class AbstractManager
      */
     public function insert(array $data)
     {
-        //TODO : Implements SQL INSERT request
+        $fields = array_keys($data);
+
+        $query = "INSERT INTO $this->table 
+                  (" . implode(',', $fields) . ") 
+                  VALUES (:" . implode(',:', $fields) . ")";
+
+        $statement = $this->pdoConnection->prepare($query);
+        foreach ($data as $field => $value) {
+            $statement->bindValue($field, $value);
+        }
+        $statement->execute();
+
     }
 
 
     /**
-     * @param int   $id   Id of the row to update
+     * @param int $id Id of the row to update
      * @param array $data $data to update
      */
     public function update(int $id, array $data)
     {
+//        $query = "UPDATE $this->table SET field=value"
         //TODO : Implements SQL UPDATE request
     }
 }

@@ -2,6 +2,9 @@
 
 {% block content %}
     <h1>Items</h1>
+
+    <a class="btn btn-primary" href="/item/add">Ajouter un item</a>
+
     <ul>
         {% for item in items %}
             <li><a href="/item/{{ item.id }}">{{ item.id }}. {{ item.title }}</a></li>
@@ -9,4 +12,5 @@
             <li>Nothing to display</li>
         {% endfor %}
     </ul>
+
 {% endblock %}

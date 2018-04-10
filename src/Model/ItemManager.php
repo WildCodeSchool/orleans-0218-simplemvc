@@ -23,4 +23,10 @@ class ItemManager extends AbstractManager
     {
         parent::__construct(self::TABLE);
     }
+
+
+//    public function myCustomQuery()
+//    {
+//        return $this->pdoConnection->query('SELECT * FROM ' . $this->table . ' LIMIT 1', \PDO::FETCH_CLASS, $this->className)->fetchAll();
+//    }
 }

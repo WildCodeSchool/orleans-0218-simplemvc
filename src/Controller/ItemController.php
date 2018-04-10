@@ -28,7 +28,6 @@ class ItemController extends AbstractController
     {
         $itemManager = new ItemManager();
         $items = $itemManager->selectAll();
-
         return $this->twig->render('Item/index.html.twig', ['items' => $items]);
     }
 
@@ -67,8 +66,33 @@ class ItemController extends AbstractController
      */
     public function add()
     {
-        // TODO : add a new item
-        return $this->twig->render('Item/add.html.twig');
+        // si form soumis
+        $errors = [];
+        if (!empty($_POST)) {
+            // validation des données
+
+            if (empty(trim($_POST['title']))) {
+                $errors[] = 'Le champ ne doit être vide';
+            }
+            if (strlen($_POST['title'])>255) {
+                $errors[] = 'Le champ est trop long';
+            }
+
+            // si pas d'erreur
+            if (empty($errors)) {
+                // insert en bdd
+                $data['title'] = trim($_POST['title']);
+
+                $itemManager = new ItemManager();
+                $itemManager->insert($data);
+
+                // redirect vers index
+                header('Location: /item/list');
+                exit();
+            }
+        }
+
+        return $this->twig->render('Item/add.html.twig', ['errors' => $errors]);
     }
 
     /**
