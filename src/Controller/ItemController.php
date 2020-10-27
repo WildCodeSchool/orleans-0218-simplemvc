@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: root
@@ -28,13 +29,14 @@ class ItemController extends AbstractController
     {
         $itemManager = new ItemManager();
         $items = $itemManager->selectAll();
+
         return $this->twig->render('Item/index.html.twig', ['items' => $items]);
     }
 
     /**
      * Display item informations specified by $id
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return string
      */
@@ -49,7 +51,7 @@ class ItemController extends AbstractController
     /**
      * Display item edition page specified by $id
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return string
      */
@@ -74,7 +76,7 @@ class ItemController extends AbstractController
             if (empty(trim($_POST['title']))) {
                 $errors[] = 'Le champ ne doit être vide';
             }
-            if (strlen($_POST['title'])>255) {
+            if (strlen($_POST['title']) > 255) {
                 $errors[] = 'Le champ est trop long';
             }
 
@@ -98,7 +100,7 @@ class ItemController extends AbstractController
     /**
      * Display item delete page
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return string
      */

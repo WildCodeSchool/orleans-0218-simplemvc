@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: sylvain
@@ -41,13 +42,15 @@ abstract class AbstractManager
      */
     public function selectAll(): array
     {
-        return $this->pdoConnection->query('SELECT * FROM ' . $this->table, \PDO::FETCH_CLASS, $this->className)->fetchAll();
+        $query = "SELECT * FROM ' . $this->table";
+
+        return $this->pdoConnection->query($query, \PDO::FETCH_CLASS, $this->className)->fetchAll();
     }
 
     /**
      * Get one row from database by ID.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return array
      */
@@ -82,18 +85,16 @@ abstract class AbstractManager
     {
         $fields = array_keys($data);
 
-        $query = "INSERT INTO $this->table 
-                  (" . implode(',', $fields) . ") 
-                  VALUES (:" . implode(',:', $fields) . ")";
+        $query = "INSERT INTO $this->table ("
+            . implode(',', $fields) . ") VALUES (:"
+            . implode(',:', $fields) . ")";
 
         $statement = $this->pdoConnection->prepare($query);
         foreach ($data as $field => $value) {
             $statement->bindValue($field, $value);
         }
         $statement->execute();
-
     }
-
 
     /**
      * @param int $id Id of the row to update
