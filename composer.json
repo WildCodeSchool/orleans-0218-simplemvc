@@ -11,7 +11,13 @@
     "require": {
         "nikic/fast-route": "^1.2",
         "twig/twig": "^2.4",
-        "squizlabs/php_codesniffer": "*"
+    },
+    "require-dev": {
+        "phpmd/phpmd": "^2.7",
+        "phpro/grumphp": "^0.15.0",
+        "phpstan/phpstan": "^0.11.2",
+        "squizlabs/php_codesniffer": "*",
+        "filp/whoops": "^2.4"
     },
     "autoload": {
         "psr-4": {
