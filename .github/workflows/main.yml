@@ -6,9 +6,9 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ dev, master ]
   pull_request:
-    branches: [ master ]
+    branches: [ dev, master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -21,6 +21,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+
+      - name: ignored-dir-checks
+        run: |
+          if [ -d "./.idea" ]; then echo "Forbidden idea folder found ! Please, ignore it..."; exit 2; fi
+          if [ -d "./.vscode" ]; then echo "Forbidden vscode folder found ! Please, ignore it..."; exit 2; fi
+          if [ -d "./vendor" ]; then echo "Forbidden external libs folder found ! Please, ignore it..."; exit 2; fi
+          if [ $(find ./ -name .DS_Store) ]; then echo "Forbidden MacOS boring file found ! Please, ignore it..."; exit 2; fi
 
       # Runs a single command using the runners shell
       - name: Composer
